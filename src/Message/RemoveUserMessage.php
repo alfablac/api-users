@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Message;
+use Symfony\Component\Validator\Constraints as Assert;
 
 final class RemoveUserMessage
 {

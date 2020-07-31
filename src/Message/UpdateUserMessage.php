@@ -4,8 +4,13 @@ namespace App\Message;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
-final class CreateUserMessage
+final class UpdateUserMessage
 {
+    /**
+     * @Assert\NotBlank(message="ID is required.")
+     */
+    private int $id;
+
     /**
      * @Assert\NotBlank(message="Name is required.")
      * @Assert\Length(
@@ -23,17 +28,16 @@ final class CreateUserMessage
      */
     private string $email;
 
-    /**
-     * @Assert\Count(min="2")
-     * @Assert\Valid()
-     */
-    private array $telephones;
-
-    public function __construct(string $name, string $email, array $telephones)
+    public function __construct(int $id, string $name, string $email)
     {
+        $this->id = $id;
         $this->name = $name;
         $this->email = $email;
-        $this->telephones = $telephones;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 
     public function getName(): string
@@ -44,10 +48,5 @@ final class CreateUserMessage
     public function getEmail(): string
     {
         return $this->email;
-    }
-
-    public function getTelephones(): array
-    {
-        return $this->telephones;
     }
 }

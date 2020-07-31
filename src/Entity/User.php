@@ -21,12 +21,12 @@ class User
 
     /**
      * @ORM\Column()
-     * @Assert\NotBlank(message="O nome do usuário é obrigatório")
+     * @Assert\NotBlank(message="Username is required")
      * @Assert\Length(
      *     min="5",
-     *     minMessage="O nome do usuário deve conter pelo menos {{ limit }} caracteres",
+     *     minMessage="Username must contain at least {{ limit }} chars",
      *     max="10",
-     *     maxMessage="O nome do usuário deve conter no máximo {{ limit }} caracters"
+     *     maxMessage="Username must contain up to {{ limit }} chars"
      * )
      */
     private ?string $name = null;

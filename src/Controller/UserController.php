@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
@@ -42,6 +42,18 @@ class UserController extends AbstractController
         }
 
         return new JsonResponse($data);
+    }
+
+    private function userToArray(User $user): array
+    {
+        return [
+            'id' => $user->getId(),
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'telephones' => array_map(fn(Telephone $telephone) => [
+                'number' => $telephone->getNumber()
+            ], $user->getTelephones()->toArray())
+        ];
     }
 
     /**
@@ -84,7 +96,6 @@ class UserController extends AbstractController
         $this->manager->persist($user);
         $this->manager->flush();
 
-        // enviar email aqui????
 
         return new Response('', Response::HTTP_CREATED, [
             'Location' => '/users/' . $user->getId()
@@ -131,17 +142,5 @@ class UserController extends AbstractController
     {
         $this->bus->dispatch(new RemoveUserMessage($id));
         return new Response('', Response::HTTP_OK);
-    }
-
-    private function userToArray(User $user): array
-    {
-        return [
-            'id' => $user->getId(),
-            'name' => $user->getName(),
-            'email' => $user->getEmail(),
-            'telephones' => array_map(fn(Telephone $telephone) => [
-                'number' => $telephone->getNumber()
-            ], $user->getTelephones()->toArray())
-        ];
     }
 }

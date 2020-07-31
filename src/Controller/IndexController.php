@@ -4,16 +4,18 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends AbstractController
+class IndexController extends AbstractController
 {
-    public function index(Request $request): Response
+    /**
+     * @Route("/", methods={"GET"})
+     */
+    public function homePage(): Response
     {
-        return new JsonResponse([
-            'name' => $request->query->get('nome')
-        ]);
+        $response = 'This is a PHP user api.';
+
+        return new JsonResponse($response);
     }
 }
