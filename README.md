@@ -1,7 +1,7 @@
 # api-users
 php api
 
-###How to use:
+### How to use:
 
 Install using composer and create a db schema using doctrine
 
@@ -16,7 +16,7 @@ Run server using
 php -S localhost:8080 -t public/
 ```
 
-####User create/update
+#### User create/update
 POST /users
 
 PUT /users/{id}
